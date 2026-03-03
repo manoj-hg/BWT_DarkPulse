@@ -59,4 +59,8 @@ The system consists of the following components:
 - Flask Backend  
 - OpenAI API (LLM Integration)  
 - MongoDB / MySQL  
-- HTML/CSS Frontend  
+- HTML/CSS Frontend
+
+## 📊 System Architecture Diagram
+
+![Architecture Diagram](2b33a831-dcd7-4c68-a47a-19a70df109c0.png)
