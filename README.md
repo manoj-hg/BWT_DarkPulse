@@ -64,3 +64,6 @@ The system consists of the following components:
 ## 📊 System Architecture Diagram
 
 ![Architecture Diagram](2b33a831-dcd7-4c68-a47a-19a70df109c0.png)
+
+## Local host link
+http://10.245.73.54:5000
