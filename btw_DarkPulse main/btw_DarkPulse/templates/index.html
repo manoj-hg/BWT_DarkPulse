@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance - Presidency University</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="university-header">
+        <div class="header-container">
+            <div class="university-logo">
+                <div class="logo-icon">
+                    <img src="/static/images/university-logo.png" alt="Presidency University Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>Presidency University</h1>
+                    <p id="class-info">Face Recognition Attendance System</p>
+                </div>
+            </div>
+            <div class="header-time">
+                <div id="current-time" class="time-display"></div>
+                <div id="current-date" class="date-display"></div>
+            </div>
+            <div class="faculty-info">
+                <div class="faculty-avatar" id="faculty-avatar">F</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showPage('attendance')">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 2L2 7V18H18V7L10 2Z"/>
+                </svg>
+                Take Attendance
+            </button>
+            <button class="nav-btn" onclick="showPage('dashboard')">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <rect x="2" y="2" width="16" height="16" rx="2"/>
+                </svg>
+                Dashboard
+            </button>
+            <button class="nav-btn" onclick="goToClassSelection()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M3 3H17V7H3V3Z"/>
+                    <path d="M3 9H17V13H3V9Z"/>
+                    <path d="M3 15H17V17H3V15Z"/>
+                </svg>
+                Change Class
+            </button>
+        </div>
+    </nav>
+
+    <!-- Attendance Page -->
+    <main id="attendance-page" class="page-content">
+        <div class="page-container">
+            <!-- Class Section -->
+            <section class="class-section">
+                <div class="class-card">
+                    <div class="class-header">
+                        <div class="class-info">
+                            <h2 id="class-name">Computer Science Engineering</h2>
+                            <p id="class-details">Section A - 4th Semester</p>
+                        </div>
+                        <div class="class-strength">
+                            <div class="strength-badge">
+                                <span id="strength-number" class="strength-number">60</span>
+                                <span class="strength-label">Total Students</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="class-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Present</span>
+                            <span id="present-count" class="stat-value present">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Absent</span>
+                            <span id="absent-count" class="stat-value absent">60</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Attendance %</span>
+                            <span id="attendance-percentage" class="stat-value percentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance Control -->
+            <section class="control-section">
+                <div class="control-card">
+                    <h3>Attendance Control</h3>
+                    <div class="control-buttons">
+                        <button id="start-btn" class="btn btn-primary btn-large" onclick="startAttendance()">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <path d="M10 8L16 12L10 16V8Z" fill="currentColor"/>
+                            </svg>
+                            Start Attendance
+                        </button>
+                        <button id="stop-btn" class="btn btn-danger btn-large" onclick="stopAttendance()">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="6" y="6" width="12" height="12" fill="currentColor"/>
+                            </svg>
+                            Stop Attendance
+                        </button>
+                        <button class="btn btn-secondary" onclick="reloadFaces()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M4 10C4 5.58 7.58 2 12 2C16.42 2 20 5.58 20 10C20 14.42 16.42 18 12 18" stroke="currentColor" stroke-width="2"/>
+                                <path d="M2 10L6 6M2 10L6 14" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Reload
+                        </button>
+                    </div>
+                    <div id="control-message" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Present Students -->
+            <section class="present-section">
+                <div class="present-card">
+                    <h3>Students Present Today</h3>
+                    <div id="present-students" class="present-grid">
+                        <p class="empty-state">No students marked present yet</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student Registration -->
+            <section class="registration-section">
+                <div class="registration-card">
+                    <h3>Register New Student</h3>
+                    <div class="registration-form">
+                        <input type="text" id="new-student-name" placeholder="Enter student name">
+                        <button class="btn btn-primary" onclick="registerNewStudent()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 6C11.1 6 12 5.1 12 4C12 2.9 11.1 2 10 2C8.9 2 8 2.9 8 4C8 5.1 8.9 6 10 6Z" fill="currentColor"/>
+                                <path d="M10 8C7.79 8 6 9.79 6 12V18H14V12C14 9.79 12.21 8 10 8Z" fill="currentColor"/>
+                            </svg>
+                            Capture Photo
+                        </button>
+                    </div>
+                    <div id="registration-message" class="message"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Dashboard Page -->
+    <main id="dashboard-page" class="page-content" style="display: none;">
+        <div class="page-container">
+            <!-- Attendance Records -->
+            <section class="records-section">
+                <div class="records-card">
+                    <div class="records-header">
+                        <h3>Attendance Records</h3>
+                        <div class="filter-controls">
+                            <input type="date" id="date-filter" onchange="loadAttendance()">
+                            <button class="btn btn-small" onclick="clearDateFilter()">Clear</button>
+                        </div>
+                    </div>
+                    
+                    <div id="attendance-list" class="attendance-list">
+                        <p>Loading attendance records...</p>
+                    </div>
+                    
+                    <div class="records-actions">
+                        <button class="btn btn-secondary" onclick="loadAttendance()">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1V15M1 8H15" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Refresh
+                        </button>
+                        <button class="btn btn-danger" onclick="clearAllRecords()">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M2 4H14M5 4V3C5 2.45 5.45 2 6 2H10C10.55 2 11 2.45 11 3V4M4 4L5 14H11L12 4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Manual Attendance -->
+            <section class="manual-section">
+                <div class="manual-card">
+                    <h3>Manual Attendance</h3>
+                    <div class="manual-form">
+                        <input type="text" id="student-name" placeholder="Enter student name">
+                        <button class="btn btn-primary" onclick="markManualAttendance()">
+                            Mark Attendance
+                        </button>
+                    </div>
+                    <div id="manual-message" class="message"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="university-footer">
+        <div class="footer-container">
+            <p>&copy; 2024 Presidency University. All rights reserved.</p>
+            <p>Face Recognition Attendance System v1.0</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

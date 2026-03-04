@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Class - Presidency University</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Copy colorful styles from main style.css */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e40af 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(55, 48, 163, 0.2) 0%, transparent 50%);
+            animation: floatingBubbles 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatingBubbles {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .select-class-container {
+            min-height: 100vh;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* University Header Styles */
+        .university-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #1e40af 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 8px 32px rgba(30, 58, 138, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .university-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .university-header::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb, #1e40af, #1e3a8a, #2563eb, #3b82f6);
+            background-size: 200% 100%;
+            animation: rainbow 4s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .university-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ffffff, #f0f9ff, #ffffff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 3s ease-in-out infinite;
+        }
+
+        @keyframes textShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .logo-text p {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .faculty-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .faculty-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            z-index: -1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            color: #64748b;
+            margin-bottom: 3rem;
+        }
+        
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .class-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .class-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .class-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3a8a, #3730a3);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .class-icon svg {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+        
+        .class-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .class-details {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        
+        .class-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .class-strength {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+        
+        .class-status {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .class-status.active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .select-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #1e3a8a, #3730a3);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+        
+        .select-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+        }
+        
+        .message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        
+        .message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+    <div class="select-class-container">
+        <!-- University Header -->
+        <header class="university-header">
+            <div class="header-container">
+                <div class="university-logo">
+                    <div class="logo-icon">
+                        <img src="/static/images/university-logo.png" alt="Presidency University Logo">
+                    </div>
+                    <div class="logo-text">
+                        <h1>Presidency University</h1>
+                        <p>Face Recognition Attendance System</p>
+                    </div>
+                </div>
+                <div class="faculty-info">
+                    <div class="faculty-avatar" id="faculty-avatar">F</div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div id="class-message"></div>
+            
+            <h1 class="page-title">Select Class</h1>
+            <p class="page-subtitle">Choose a class to take attendance</p>
+            
+            <div class="classes-grid" id="classes-grid">
+                <!-- Classes will be loaded here -->
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Classes data
+        const classes = [
+            {
+                id: 'cse-a',
+                name: 'Computer Science Engineering',
+                section: 'Section A',
+                semester: '4th Semester',
+                strength: 60,
+                status: 'active'
+            },
+            {
+                id: 'cse-b',
+                name: 'Computer Science Engineering',
+                section: 'Section B',
+                semester: '4th Semester',
+                strength: 58,
+                status: 'active'
+            },
+            {
+                id: 'ece-a',
+                name: 'Electronics & Communication',
+                section: 'Section A',
+                semester: '4th Semester',
+                strength: 55,
+                status: 'active'
+            },
+            {
+                id: 'mech-a',
+                name: 'Mechanical Engineering',
+                section: 'Section A',
+                semester: '4th Semester',
+                strength: 62,
+                status: 'active'
+            },
+            {
+                id: 'civil-a',
+                name: 'Civil Engineering',
+                section: 'Section A',
+                semester: '4th Semester',
+                strength: 48,
+                status: 'active'
+            },
+            {
+                id: 'it-a',
+                name: 'Information Technology',
+                section: 'Section A',
+                semester: '4th Semester',
+                strength: 56,
+                status: 'active'
+            }
+        ];
+        
+        // Load faculty info
+        function loadFacultyInfo() {
+            const session = localStorage.getItem('faculty_session');
+            if (session) {
+                const faculty = JSON.parse(session);
+                document.getElementById('faculty-avatar').textContent = faculty.name.charAt(0).toUpperCase();
+            } else {
+                window.location.href = '/login';
+            }
+        }
+        
+        // Load classes
+        function loadClasses() {
+            const grid = document.getElementById('classes-grid');
+            
+            const classesHTML = classes.map(cls => `
+                <div class="class-card" onclick="selectClass('${cls.id}')">
+                    <div class="class-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 7L12 3L22 7V17L12 21L2 17V7Z"/>
+                            <path d="M12 3V21"/>
+                        </svg>
+                    </div>
+                    <h3 class="class-title">${cls.name}</h3>
+                    <div class="class-details">
+                        ${cls.section} • ${cls.semester}
+                    </div>
+                    <div class="class-stats">
+                        <span class="class-strength">${cls.strength} Students</span>
+                        <span class="class-status ${cls.status}">${cls.status}</span>
+                    </div>
+                    <button class="select-btn">Take Attendance</button>
+                </div>
+            `).join('');
+            
+            grid.innerHTML = classesHTML;
+        }
+        
+        // Select class
+        function selectClass(classId) {
+            const selectedClass = classes.find(cls => cls.id === classId);
+            
+            // Store selected class
+            localStorage.setItem('selected_class', JSON.stringify(selectedClass));
+            
+            // Redirect to attendance page
+            window.location.href = '/attendance';
+        }
+        
+        // Logout
+        function logout() {
+            localStorage.removeItem('faculty_session');
+            localStorage.removeItem('selected_class');
+            window.location.href = '/login';
+        }
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFacultyInfo();
+            loadClasses();
+        });
+    </script>
+</body>
+</html>
