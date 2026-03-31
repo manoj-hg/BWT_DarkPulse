@@ -7,7 +7,7 @@
 
 Educational institutions lose valuable productive time due to manual attendance systems and lack of intelligent academic insights. Additionally, students often struggle with managing learning content effectively.
 
-There is a need for an AI-powered system that improves classroom productivity, reduces administrative workload, and enhances student focus and knowledge retention..
+There is a need for an AI-powered system that improves classroom productivity, reduces administrative workload, and enhances student focus and knowledge retention.
 
 
 💡 Solution Overview  
