@@ -31,7 +31,7 @@ The system consists of the following components:
 1️⃣ Face Recognition Layer  
 - Camera captures real-time video  
 - OpenCV detects and recognizes students  
-- Attendance automatically recorded  
+- Attendance automatically recorded.
 
 2️⃣ Backend Server  
 - Handles attendance logic  
