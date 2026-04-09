@@ -12,7 +12,7 @@ There is a need for an AI-powered system that improves classroom productivity, r
 
 💡 Solution Overview  
 
-DarkPulse is an AI-powered classroom productivity assistant that combines Face Recognition with intelligent AI analysis to enhance focus and flow within classrooms.
+DarkPulse is an AI-powered classroom productivity assistant that combines Face Recognition with intelligent AI analysis to enhance focus and flow within classrooms..
 
 The system:
 
