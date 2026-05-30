@@ -1,4 +1,4 @@
- 🚀 DarkPulse – AI Focus & Flow Classroom Assistant  
+ 🚀 DarkPulse – AI Focus & Flow Classroom Assistant 
  Theme: AI Super Productivity – Build for Focus and Flow  
 ** Team: Dark Pulse  ***
 
