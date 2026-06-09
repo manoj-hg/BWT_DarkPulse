@@ -3,7 +3,7 @@
 ** Team: Dark Pulse  ***
 
 ---
- 📌 Problem Statement  
+ 📌 Problem Statement 
 
 Educational institutions lose valuable productive time due to manual attendance systems and lack of intelligent academic insights. Additionally, students often struggle with managing learning content effectively.
 
